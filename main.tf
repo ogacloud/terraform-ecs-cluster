@@ -34,10 +34,9 @@ resource "aws_ecr_repository" "aws-repo" {
 }
 
 module "ecr_docker_build" {
-    source = "https://github.com/onnimonni/terraform-ecr-docker-build-module"
-    dockerfile_folder = "${path.module}"
-    docker_image_tag = "latest"
-    ecr_repository_url = "${aws_ecr_repository.aws-repo.repository_url}"
+    source = "github.com/byu-oit/terraform-aws-ecr-image?ref=v1.0.1"
+    dockerfile_dir = "."
+    ecr_repository_url = module.ecr.repository.repository_url
 }
 
 
