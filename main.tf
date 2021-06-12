@@ -60,7 +60,7 @@ data "aws_iam_policy_document" "assume_role_policy" {
             identifiers = ["ecs-tasks.amazonaws.com"]
         }
     }
-    depends_on = "${ecr_docker_build}"
+    depends_on = ["module.ecr_docker_build"]
 }
 
 resource "aws_iam_policy_attachment" "ecsTaskExecutionRole_policy" {
@@ -134,7 +134,7 @@ resource "aws_lb_target_group" "target_group" {
     protocol = "HTTP"
     target_type = "ip"
     vpc_id = "${aws_default_vpc.default_vpc.id}"
-    depends_on = "${aws_alb.application_load_balancer}"
+    depends_on = ["aws_alb.application_load_balancer"]
 
 }
 
@@ -176,7 +176,7 @@ resource "aws_ecs_service" "aws-ecs-service" {
     container_port   = 8080
   }
 
-  depends_on = "${aws_lb_listener.listener}"
+  depends_on = ["aws_lb_listener.listener"]
 }
 
 resource "aws_security_group" "service_security_group" {
