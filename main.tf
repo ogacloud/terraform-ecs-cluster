@@ -1,3 +1,12 @@
+terraform {
+  required_providers {
+    "aws" = {
+      source  = "hashicorp/aws"
+      version = "2.70.0"
+    }
+  }
+}
+
 provider "aws" {
     version = "~> 1.0"
     region = "us-east-1"
@@ -28,7 +37,7 @@ resource "aws_ecr_repository" "aws-repo" {
 module "ecr_docker_build" {
     source = "github.com/omnimonni/terraform-ecr-docker-build-module"
     dockerfile_folder = "${path.module}"
-    docker_image_tag = "dev"
+    docker_image_tag = "latest"
     ecr_repository_url = "${aws_ecr_repository.aws-repo.repository_url}"
 }
 
