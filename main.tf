@@ -2,7 +2,7 @@ terraform {
   required_providers {
       aws = {
       source  = "hashicorp/aws"
-      version = "2.70.0"
+      version = "~>3.0"
     }
   }
 }
@@ -60,7 +60,7 @@ data "aws_iam_policy_document" "assume_role_policy" {
             identifiers = ["ecs-tasks.amazonaws.com"]
         }
     }
-    depends_on = ["module.ecr_docker_build"]
+    depends_on = [module.ecr_docker_build]
 }
 
 resource "aws_iam_policy_attachment" "ecsTaskExecutionRole_policy" {
@@ -93,7 +93,7 @@ resource "aws_ecs_task_definition" "aws-task" {
     network_mode             = "awsvpc"
     memory                   = "512"
     cpu                      = "256"
-    execution_role_arn =     = "${aws_iam_role.ecsTaskExecutionRole_arn}"
+    execution_role_arn =     = "${aws_iam_role.ecsTaskExecutionRole.arn}"
 }
 
 resource "aws_alb" "application_load_balancer" {
@@ -133,7 +133,7 @@ resource "aws_lb_target_group" "target_group" {
     protocol = "HTTP"
     target_type = "ip"
     vpc_id = "${aws_default_vpc.default_vpc.id}"
-    depends_on = ["aws_alb.application_load_balancer"]
+    depends_on = [aws_alb.application_load_balancer]
 
 }
 
@@ -175,7 +175,7 @@ resource "aws_ecs_service" "aws-ecs-service" {
     container_port   = 8080
   }
 
-  depends_on = ["aws_lb_listener.listener"]
+  depends_on = [aws_lb_listener.listener]
 }
 
 resource "aws_security_group" "service_security_group" {
