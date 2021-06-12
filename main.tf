@@ -8,7 +8,6 @@ terraform {
 }
 
 provider "aws" {
-    version = "~> 1.0"
     region = "us-east-1"
     aws_access_key = "${var.aws_access_key}"
     aws_secret_key = "${var.aws_secret_key}"
@@ -93,7 +92,7 @@ resource "aws_ecs_task_definition" "aws-task" {
     network_mode             = "awsvpc"
     memory                   = "512"
     cpu                      = "256"
-    execution_role_arn =     = "${aws_iam_role.ecsTaskExecutionRole.arn}"
+    execution_role_arn =     = aws_iam_role.ecsTaskExecutionRole.arn
 }
 
 resource "aws_alb" "application_load_balancer" {
