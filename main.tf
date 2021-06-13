@@ -63,7 +63,7 @@ data "aws_iam_policy_document" "assume_role_policy" {
 
 resource "aws_iam_policy_attachment" "ecsTaskExecutionRole_policy" {
     name = "${var.app_name}-aws_iam_policy_attachment"
-    roles = "${aws_iam_role.ecsTaskExecutionRole.name}"
+    role = aws_iam_role.ecsTaskExecutionRole.name
     policy_arn = "arn:aws:iam:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
@@ -113,7 +113,6 @@ resource "aws_security_group" "load_balancer_security_group" {
         to_port = 80
         protocol = "tcp"
         cidr_blocks = ["0.0.0.0/0"]
-        security_groups = ["${aws_security_group.load_balancer_security_group.id}"]
     }
 
     egress {
