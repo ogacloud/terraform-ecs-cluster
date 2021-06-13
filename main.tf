@@ -18,15 +18,15 @@ resource "aws_default_vpc" "default_vpc" {
 }
 
 resource "aws_default_subnet" "aws_default_subnet_a" {
-    az_zone = "us-east-1a"
+    availability_zone = "us-east-1a"
 }
 
 resource "aws_default_subnet" "aws_default_subnet_b" {
-    az_zone = "us-east-1b"
+    availability_zone = "us-east-1b"
 }
 
 resource "aws_default_subnet" "aws_default_subnet_c" {
-    az_zone = "us-east-1c"
+    availability_zone = "us-east-1c"
 }
 
 resource "aws_ecr_repository" "aws-repo" {
@@ -62,6 +62,7 @@ data "aws_iam_policy_document" "assume_role_policy" {
 }
 
 resource "aws_iam_policy_attachment" "ecsTaskExecutionRole_policy" {
+    name = "${var.app_name}-aws_iam_policy_attachment"
     role = "${aws_iam_role.ecsTaskExecutionRole.name}"
     policy_arn = "arn:aws:iam:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
