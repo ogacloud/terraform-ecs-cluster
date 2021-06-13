@@ -9,8 +9,8 @@ terraform {
 
 provider "aws" {
     region = "us-east-1"
-    aws_access_key = "${var.aws_access_key}"
-    aws_secret_key = "${var.aws_secret_key}"
+    aws_access_key = var.aws_access_key
+    aws_secret_key = var.aws_secret_key
 }
 
 resource "aws_default_vpc" "default_vpc" {
@@ -36,7 +36,7 @@ resource "aws_ecr_repository" "aws-repo" {
 module "ecr_docker_build" {
     source = "github.com/byu-oit/terraform-aws-ecr-image?ref=v1.0.1"
     dockerfile_dir = "."
-    ecr_repository_url = module.ecr.repository.repository_url
+    ecr_repository_url = "${aws_ecr_repository.aws-repo.repository_url}"
 }
 
 
