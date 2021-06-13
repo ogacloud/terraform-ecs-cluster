@@ -95,7 +95,7 @@ resource "aws_ecs_task_definition" "aws-task" {
 }
 
 resource "aws_alb" "application_load_balancer" {
-    name = "${var.app_name}-load_balancer"
+    name = "${var.app_name}-load-balancer"
     load_balancer_type = "application"
     subnets = [
         "${aws_default_subnet.aws_default_subnet_a.id}",
@@ -125,7 +125,7 @@ resource "aws_security_group" "load_balancer_security_group" {
 }
 
 resource "aws_lb_target_group" "target_group" {
-    name = "${var.app_name}-target_group"
+    name = "${var.app_name}-target-group"
     port = 80
     protocol = "HTTP"
     target_type = "ip"
