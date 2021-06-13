@@ -63,8 +63,7 @@ data "aws_iam_policy_document" "assume_role_policy" {
 
 resource "aws_iam_policy_attachment" "ecsTaskExecutionRole_policy" {
     name = "${var.app_name}-aws_iam_policy_attachment"
-    roles = ["${aws_iam_role.role.name}"]
-    groups = ["${aws_iam_role.group.name}"]
+    roles = ["${aws_iam_role.ecsTaskExecutionRole_policy.name}"]
     policy_arn = "arn:aws:iam:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
